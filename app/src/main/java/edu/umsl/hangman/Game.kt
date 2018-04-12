@@ -7,7 +7,42 @@ import java.util.Random
  * Created by nor on 4/12/18.
  */
 
- class Phrases{
+
+
+class Game{
+    private var phrase: String = ""
+    private var hiddenPhrase: String = ""
+
+    init{
+        val phrases = Phrases()
+        phrase = phrases.getRandomPhrase()
+        hiddenPhrase = phrase
+
+        val regexp = "[a-zA-z]".toRegex()// use this regular expression to remove the ocurrances of letters
+        hiddenPhrase = regexp.replace(hiddenPhrase, "-")
+
+    }
+
+    fun getPhrase(): String{
+        println("$hiddenPhrase")
+        return hiddenPhrase
+    }
+
+    private fun showLetters(char: String): Boolean{
+        //var hidden = phrase.toCharArray()
+        var answerFlag = false
+
+        val regex = char.toString().toRegex()
+        val newHidden = regex.replace(hiddenPhrase, char)
+        val isCorrect = hiddenPhrase != newHidden
+
+        return isCorrect
+    }
+
+}
+
+
+class Phrases{
     private val size = 2
     private var phrases: ArrayList<String>? = null
     init{
@@ -19,22 +54,8 @@ import java.util.Random
 
     fun getRandomPhrase(): String{
         val random = Random()
-        val phrase = phrases?.get(random.nextInt(size))
-        Log.e("Hi", phrase)
-        return phrase!!
-    }
-
-
-
-
-}
-
-class Game{
-    private var phrases: Phrases = Phrases()
-
-    fun getPhrase(): String{
-
-        return phrases?.getRandomPhrase()!!
+        val phrase = phrases?.get(random.nextInt(size))!!
+        return phrase
     }
 
 }

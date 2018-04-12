@@ -7,27 +7,37 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="horizontal"
-    tools:context="edu.umsl.hangman.TitleView">
+    tools:context="edu.umsl.hangman.GameView">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.2">
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.6"
         android:orientation="vertical">
 
-
-
-        <Button
-            android:id="@+id/playButton"
+        <TextView
+            android:id="@+id/phraseView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Play"
             android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/ssButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="change"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -42,3 +52,4 @@
     </LinearLayout>
 
 </LinearLayout>
+
