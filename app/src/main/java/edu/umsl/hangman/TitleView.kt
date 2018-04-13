@@ -14,7 +14,6 @@ class TitleView : Activity() {
         playButton.setOnClickListener{
             val intent = Intent(this, GameView::class.java)
             this.startActivity(intent)
-            //this.finish()
         }
 
     }

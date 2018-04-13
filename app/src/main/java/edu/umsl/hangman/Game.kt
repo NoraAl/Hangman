@@ -1,44 +1,54 @@
 package edu.umsl.hangman
 
-import android.util.Log
 import java.util.Random
-
-/**
- * Created by nor on 4/12/18.
- */
 
 
 
 class Game{
-    private var phrase: String = ""
-    private var hiddenPhrase: String = ""
+    private var answer: String = ""
+    private var currentHidden: String = ""
+    private var oldHidden: String =""
+    private var pattern: String = ""
+    private lateinit var regEx: Regex
+    private var isSolved: Boolean = false
 
     init{
         val phrases = Phrases()
-        phrase = phrases.getRandomPhrase()
-        hiddenPhrase = phrase
-
-        val regexp = "[a-zA-z]".toRegex()// use this regular expression to remove the ocurrances of letters
-        hiddenPhrase = regexp.replace(hiddenPhrase, "-")
-
+        answer = phrases.getRandomPhrase()
+        scratchChar(" ")
+        oldHidden = currentHidden
     }
 
-    fun getPhrase(): String{
-        println("$hiddenPhrase")
-        return hiddenPhrase
+    private fun scratchChar(char: String){
+        // add current char to pattern
+        // actually, it is all but that char, because eventually, we'll raplace them with '-'
+        pattern += char
+        regEx = Regex("(?i)[^"+pattern+"]")
+
+        // show all occurrences of the current char
+        currentHidden = regEx.replace(answer,"–")
+        println (currentHidden)
     }
 
-    private fun showLetters(char: String): Boolean{
-        //var hidden = phrase.toCharArray()
-        var answerFlag = false
-
-        val regex = char.toString().toRegex()
-        val newHidden = regex.replace(hiddenPhrase, char)
-        val isCorrect = hiddenPhrase != newHidden
-
-        return isCorrect
+     fun updateCurrentPhrase(char: String): Boolean{
+         scratchChar(char)
+         if (currentHidden == answer)
+             isSolved = true
+         if (currentHidden != oldHidden){
+             oldHidden = currentHidden
+             return true
+         }
+         return false
     }
 
+    fun getUpdatedPhrase(): String{
+        println("$currentHidden")
+        return currentHidden
+    }
+
+    fun isSolved(): Boolean{
+        return isSolved
+    }
 }
 
 
