@@ -16,7 +16,6 @@ import edu.umsl.hangman.R.mipmap.ic_launcher
 
 
 class NotificationReceiver : BroadcastReceiver() {
-
     companion object {
         private val CHANNEL = "HangmanChannelId"
         const private val NAME = "Hangman"
