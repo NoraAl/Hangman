@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="horizontal"
-    tools:context="edu.umsl.hangman.TitleView">
+    tools:context="edu.umsl.hangman.MainView">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

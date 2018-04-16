@@ -5,15 +5,10 @@ import android.content.Context
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_game_view.*
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import android.animation.AnimatorInflater
-import android.graphics.drawable.Animatable
-import android.view.View
-import android.view.animation.AnimationUtils
-import android.view.animation.Animation
-import android.widget.ImageView
 
 
 class GameView : Activity() {
@@ -24,8 +19,18 @@ class GameView : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_view)
         game = Game()
+        changeButton.setOnClickListener{
+            animate()
+        }
 
-        showKKeyboard()
+
+
+    }
+
+    private fun animate(){
+//        val v = hangmanView.background as Animatable
+//        v.start()
+        hangmanView.anotherMistake()
 
     }
 
@@ -41,8 +46,7 @@ class GameView : Activity() {
         val isCorrect = game?.updateCurrentPhrase(key!!)
         if (isCorrect){
             // animate correct mark
-            val v = hangmanView.background as Animatable
-            v.start()
+
             //update phrase on screen
             phraseView.text = game?.getUpdatedPhrase()
             if (game?.isSolved()){

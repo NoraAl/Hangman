@@ -23,14 +23,30 @@
         android:layout_weight="0.6"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/hangmanView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="@drawable/animated_check"
+        <!--<ImageView-->
+            <!--android:id="@+id/hangmanView"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/animated_check"-->
 
-             />
+             <!--/>-->
+
+        <edu.umsl.hangman.HangmanCanva
+            android:id="@+id/hangmanView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
+
+
+        <Button
+            android:id="@+id/changeButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:text="Change"
+
+            />
 
         <TextView
             android:id="@+id/phraseView"
