@@ -11,12 +11,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainView">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN" />0
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameView" android:windowSoftInputMode="adjustResize">
+        <activity android:name=".GameView"
+            android:windowSoftInputMode="adjustResize">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
