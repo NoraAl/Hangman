@@ -24,7 +24,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.Animation
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-
+const val GAME = "game"
 
 class GameView : Activity() {
 
@@ -37,8 +37,12 @@ class GameView : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_view)
 
+        if (savedInstanceState!= null){
+            game = savedInstanceState.getSerializable(GAME) as Game
+        }else {
+            game = Game()
+        }
 
-        game = Game()
         message = getString(R.string.tap)
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val barsHeight = getBars()
@@ -50,6 +54,12 @@ class GameView : Activity() {
             toggle()
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        // game is only 5 strings and one boolean
+        outState?.putSerializable(GAME,game.getGame())
     }
 
     private fun toggle(){

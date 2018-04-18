@@ -1,29 +1,35 @@
 package edu.umsl.hangman
 
+import java.io.Serializable
 import java.util.Random
 
 
 
-class Game{
+class Game:Serializable{
     private var answer: String = ""
     private var currentHidden: String = ""
     private var oldHidden: String =""
     private var pattern: String = ""
-    private lateinit var regEx: Regex
     private var isSolved: Boolean = false
 
+
+
     init{
-        val phrases = Phrases()
-        answer = phrases.getRandomPhrase()
-        scratchChar(" ")
-        oldHidden = currentHidden
+            val phrases = Phrases()
+            answer = phrases.getRandomPhrase()
+            scratchChar(" ")
+            oldHidden = currentHidden
+    }
+
+    fun getGame(): Serializable{
+        return this
     }
 
     private fun scratchChar(char: String){
         // add current char to pattern
         // actually, it is all but that char, because eventually, we'll raplace them with '-'
         pattern += char
-        regEx = Regex("(?i)[^"+pattern+"]")
+        val regEx = Regex("(?i)[^"+pattern+"]")
 
         // show all occurrences of the current char
         currentHidden = regEx.replace(answer,"–")
