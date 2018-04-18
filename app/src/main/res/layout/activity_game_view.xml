@@ -27,6 +27,13 @@
         android:orientation="vertical">
 
 
+        <TextView
+            android:id="@+id/instructionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tap" />
+
         <edu.umsl.hangman.HangmanCanva
             android:id="@+id/hangmanView"
             android:windowSoftInputMode="adjustResize"
@@ -44,7 +51,7 @@
             android:gravity="center"
             android:background="@color/colorAccent"
             android:textColor="@color/colorPrimary"
-            android:text="\?"
+            android:focusable="true"
             android:textSize="18sp" />
 
 

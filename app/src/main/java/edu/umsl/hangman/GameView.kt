@@ -1,5 +1,6 @@
 package edu.umsl.hangman
 
+import android.animation.AnimatorInflater
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
@@ -18,65 +19,56 @@ import android.widget.Toast
 import android.view.WindowManager
 import android.opengl.ETC1.getHeight
 import android.util.TypedValue
+import android.R.anim
+import android.view.animation.AnimationUtils
+import android.view.animation.Animation
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 
 
 class GameView : Activity() {
 
     private lateinit var game: Game
-    var t  = true
-    private  var shown = false
+    private lateinit var message :String
     private lateinit var imm: InputMethodManager
+    private  var shown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_view)
 
+
         game = Game()
+        message = getString(R.string.tap)
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val barsHeight = set()
+        val barsHeight = getBars()
         shown = false
         phraseView.text = game?.getUpdatedPhrase()
 
-        phraseView.setOnClickListener{
-            //animate()
-            if (shown){
-                //Log.e("Button","it is shown")
-                //toggleEdit(false)
 
-                toggle(false)
-
-
-            } else {
-                //Log.e("Button","it is hidden")
-                //toggleEdit(true)
-                toggle(true)
-
-            }
+        rootView.setOnClickListener {
+            toggle()
         }
-
-        rootView.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            rootView.getWindowVisibleDisplayFrame(rect)
-            val currentViewHeight = rootView.rootView.height - (rect.bottom - rect.top)
-
-            shown = currentViewHeight > barsHeight
-            if (shown) {
-                rootView.rootView.top =  rootView.rootView.top - 100
-                Log.e("root", "shown, $currentViewHeight $barsHeight")
-            }
-            else
-                Log.e("root", "hidden, $currentViewHeight $barsHeight")
-        }
-
-
 
     }
 
-    fun set (): Int{
+    private fun toggle(){
+        phraseView.requestFocus()
+        if (instructionText.text == message){ //keyboard is hidden by default in manifest file(stateHidden)
+            instructionText.text = ""
+            imm.toggleSoftInput( InputMethodManager.SHOW_FORCED,0)
+        }
+        else {
+            instructionText.text = message
+            imm.toggleSoftInput(0, 0)
+        }
+    }
+
+
+
+    private fun getBars (): Int{
         val size = Point()
         windowManager.defaultDisplay.getSize(size)
-
-        val screenHeight = size.y
 
         val density = resources.displayMetrics.density
         var statusBarHeight = (density * 24).toInt()
@@ -84,7 +76,6 @@ class GameView : Activity() {
         if ( resourceId != 0 ) {
             statusBarHeight = resources.getDimensionPixelSize(resourceId)
         }
-
 
         var navigationBar = 0
         resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
@@ -94,61 +85,8 @@ class GameView : Activity() {
         return navigationBar+statusBarHeight
 
     }
-
-    override fun onResume() {
-        super.onResume()
-        //Log.e("onResume","$shown")
-        //toggleEdit(true)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //Log.e("onPause","Accepting")
-        //toggle(false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        if (imm.isAcceptingText) {
-//
-//            toggle(false)
-//            Log.e("onDestroy","Accepting")
-//        }
-    }
-//    private fun ss(){
-//
-//        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
-//    }
-
-
-
-    private fun toggle(show:Boolean){
-        if (show && shown){//already
-            Log.e("toggleEdit","it is already shown")
-            return
-        }
-        if (show){//not but show
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-            Log.e("toggleEdit","show")
-            return
-        }
-        if (!shown){//not and hide
-            Log.e("toggleEdit","it is already hidden")
-            return
-        }
-        shown = false
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
-        Log.e("toggleEdit","hide")
-    }
-
-
-
     private fun animate(){
-//        val v = hangmanView.background as Animatable
-//        v.start()
         hangmanView.anotherMistake()
-
     }
 
     private fun toast(text: String){
@@ -159,12 +97,8 @@ class GameView : Activity() {
 
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            currentFocus?.let {
-                val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                inputManager?.hideSoftInputFromInputMethod(currentFocus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
+            toggle()
             return super.onKeyUp(keyCode, event)
         }
 
@@ -181,7 +115,10 @@ class GameView : Activity() {
                 toast("Correct! Try another one!")
         } else {
             //todo: hangman
-            toast("Hard luck!")
+            val animator = ObjectAnimator.ofFloat(phraseView,
+                    "translationX", 0f, 25f, -25f, 25f, -25f,15f, -15f, 6f, -6f, 0f)
+            animator.duration = 1000
+            animator.start()
         }
         return super.onKeyUp(keyCode, event)
     }

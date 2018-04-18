@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hangman</string>
+    <string name="tap">Tap to show the keyboard</string>
 </resources>
