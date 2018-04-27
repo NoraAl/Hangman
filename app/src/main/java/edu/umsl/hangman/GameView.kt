@@ -24,6 +24,8 @@ import android.view.animation.AnimationUtils
 import android.view.animation.Animation
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.os.Handler
+
 const val GAME = "game"
 
 class GameView : Activity() {
@@ -51,7 +53,8 @@ class GameView : Activity() {
 
 
         rootView.setOnClickListener {
-            toggle()
+            hangmanView.anotherMistake()
+            //toggle()
         }
 
     }
@@ -120,17 +123,31 @@ class GameView : Activity() {
             //update phrase on screen
             phraseView.text = game?.getUpdatedPhrase()
             if (game?.isSolved()){
-                toast("You Won!")}
+                toast("You Won!")
+            }
             else
                 toast("Correct! Try another one!")
         } else {
             //todo: hangman
+            hangmanView.anotherMistake()
             val animator = ObjectAnimator.ofFloat(phraseView,
                     "translationX", 0f, 25f, -25f, 25f, -25f,15f, -15f, 6f, -6f, 0f)
             animator.duration = 1000
             animator.start()
+
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+    fun win (){
+//        val handler = Handler()
+//        handler.postDelayed({
+//            animate(button, 1000, 1)
+//        }, 200)
+//
+//        handler.postDelayed({
+//            finish()
+//        }, 2200)
     }
 
 

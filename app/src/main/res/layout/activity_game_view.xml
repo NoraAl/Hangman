@@ -34,10 +34,11 @@
             android:gravity="center"
             android:text="@string/tap" />
 
-        <edu.umsl.hangman.HangmanCanva
+        <edu.umsl.hangman.HangmanCanvas
             android:id="@+id/hangmanView"
             android:windowSoftInputMode="adjustResize"
-            android:background="@color/colorAccent"
+
+            android:elevation="10dp"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"/>
