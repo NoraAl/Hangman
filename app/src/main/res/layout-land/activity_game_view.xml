@@ -45,6 +45,12 @@
         android:layout_weight="0.5"
 
         android:orientation="vertical">
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Exit" />
 
 
         <edu.umsl.hangman.HangmanCanvas

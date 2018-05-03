@@ -49,6 +49,10 @@ class GameView : Activity() {
             toggle()
         }
 
+        exitButton.setOnClickListener{
+            finish()
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
