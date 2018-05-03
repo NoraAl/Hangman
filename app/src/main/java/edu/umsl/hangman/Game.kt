@@ -36,15 +36,14 @@ class Game:Serializable{
         println (currentHidden)
     }
 
+    // returns true if correct
      fun updateCurrentPhrase(char: String): Boolean{
          scratchChar(char)
-         if (currentHidden == answer)
-             isSolved = true
-         if (currentHidden != oldHidden){
-             oldHidden = currentHidden
-             return true
-         }
-         return false
+         if (currentHidden == answer) isSolved = true
+         if (currentHidden != oldHidden) oldHidden = currentHidden
+
+
+         return answer.toUpperCase().contains(char.toUpperCase() )
     }
 
     fun getUpdatedPhrase(): String{
@@ -63,14 +62,23 @@ class Phrases{
     private var phrases: ArrayList<String>? = null
     init{
         phrases = ArrayList(size)
-        phrases?.add("Red Apples")
-        phrases?.add("green Apples")
-        //phrases[2] = "Green Apples"
+        phrases?.add("Blue color")
+        phrases?.add("Green color")
+        phrases?.add("Red color")
+        phrases?.add("Gray color")
+        phrases?.add("Brown color")
+        phrases?.add("Purple color")
+        phrases?.add("navy color")
+        phrases?.add("Pink color")
+        phrases?.add("Black color")
+        phrases?.add("White color")
+        phrases?.add("Orange color")
+        phrases?.add("Yellow color")
     }
 
     fun getRandomPhrase(): String{
         val random = Random()
-        val phrase = phrases?.get(random.nextInt(size))!!
+        val phrase = phrases?.get(random.nextInt(phrases?.size!!))!!
         return phrase
     }
 
